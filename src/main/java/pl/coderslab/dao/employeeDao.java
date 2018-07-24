@@ -44,7 +44,7 @@ public class employeeDao {
         return employee;
     }
 
-    public List<employee> findAll() {
+    public static List<employee> findAll() {
         List<employee> employeeList = new ArrayList<>();
         try (Connection connection = DbUtil.getConn();
              PreparedStatement statement = connection.prepareStatement(FIND_ALL_EMPLOYEE_QUERY);

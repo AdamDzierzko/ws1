@@ -5,12 +5,16 @@
     <title>Title</title>
 </head>
 <body>
-
+<jsp:include page="header.jsp"/>
 
 <p>
-
+    <c:forEach items="employees" var="a">
+        ${a.employee_id}  ${a.imie} <br/>
+    </c:forEach>
 
 </p>
 ${}
+
+<jsp:include page="footer.jsp"/>
 </body>
 </html>

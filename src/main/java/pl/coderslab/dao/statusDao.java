@@ -2,7 +2,6 @@ package pl.coderslab.dao;
 
 import pl.coderslab.*;
 import pl.coderslab.status;
-import pl.coderslab.status;
 
 import java.sql.*;
 import java.util.ArrayList;

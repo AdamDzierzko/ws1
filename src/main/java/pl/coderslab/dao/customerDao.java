@@ -2,12 +2,12 @@ package pl.coderslab.dao;
 
 import pl.coderslab.DbUtil;
 
-import java.awt.print.Book;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 import pl.coderslab.customer;
+import pl.coderslab.employee;
 
 public class customerDao {
 
@@ -40,7 +40,7 @@ public class customerDao {
         return customer;
     }
 
-    public List<customer> findAll() {
+    public static List<employee> findAll() {
         List<customer> customerList = new ArrayList<>();
         try (Connection connection = DbUtil.getConn();
              PreparedStatement statement = connection.prepareStatement(FIND_ALL_CUSTOMER_QUERY);
