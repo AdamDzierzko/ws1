@@ -7,13 +7,14 @@ public class customer {
     private int customer_id;
     private String imie;
     private String nazwisko;
-    private Date data_urodzenia;
+    private java.sql.Date data_urodzenia;
 
 
     public customer() {};
 
-    public customer(String imię, String nazwisko, Date data_urodzenia) {
-        this.imie = imię;
+    public customer(int customer_id,String imie, String nazwisko, java.sql.Date data_urodzenia) {
+        this.customer_id =customer_id;
+        this.imie = imie;
         this.nazwisko = nazwisko;
         this.data_urodzenia = data_urodzenia;
     }
@@ -26,12 +27,12 @@ public class customer {
         this.customer_id = customer_id;
     }
 
-    public String getImię() {
+    public String getImie() {
         return imie;
     }
 
-    public void setImię(String imię) {
-        this.imie = imię;
+    public void setImie(String imie) {
+        this.imie = imie;
     }
 
     public String getNazwisko() {
@@ -42,11 +43,11 @@ public class customer {
         this.nazwisko = nazwisko;
     }
 
-    public Date getData_urodzenia() {
+    public java.sql.Date getData_urodzenia() {
         return data_urodzenia;
     }
 
-    public void setData_urodzenia(Date data_urodzenia) {
+    public void setData_urodzenia(java.sql.Date data_urodzenia) {
         this.data_urodzenia = data_urodzenia;
     }
 }

@@ -11,11 +11,11 @@ import java.util.List;
 public class vehicleDao {
 
 
-    private static final String READ_VEHILCE_QUERY = "Select * from vehicle where id = ?";
+    private static final String READ_VEHILCE_QUERY = "Select * from vehicle where vehicle_id = ?";
     private static final String FIND_ALL_VEHILCE_QUERY = "SELECT * FROM vehicle";
     private static final String CREATE_VEHILCE_QUERY = "INSERT INTO vehicle(customer_id,model,rok_produkcji,nr_rejestracyjny," +
             "data_kolejnego_przeglądu) VALUES (?,?,?,?,?)";
-    private static final String DELETE_VEHILCE_QUERY = "DELETE FROM vehicle where id = ?";
+    private static final String DELETE_VEHILCE_QUERY = "DELETE FROM vehicle where vehicle_id = ?";
     private static final String UPDATE_VEHILCE_QUERY = "UPDATE	vehicle SET customer_id = ? , model = ?, " +
             "rok_produkcji = ?, nr_rejestracyjny = ?, data_kolejnego_przeglądu = ?  WHERE	vehicle_id = ?";
 
@@ -54,6 +54,7 @@ public class vehicleDao {
                 vehicleToAdd.setCustomer_id(resultSet.getInt("customer_id"));
                 vehicleToAdd.setModel(resultSet.getString("model"));
                 vehicleToAdd.setRok_produkcji(resultSet.getInt("rok_produkcji"));
+                vehicleToAdd.setNr_rejestracyjny(resultSet.getInt("nr_rejestracyjny"));
                 vehicleToAdd.setData_kolejnego_przeglądu(resultSet.getDate("data_kolejnego_przeglądu"));
                 vehicleList.add(vehicleToAdd);
             }
@@ -74,7 +75,7 @@ public class vehicleDao {
             insertStm.setString(2, vehicle.getModel());
             insertStm.setInt(3, vehicle.getRok_produkcji());
             insertStm.setInt(4, vehicle.getNr_rejestracyjny());
-            insertStm.setDate(5, (Date) vehicle.getData_kolejnego_przeglądu());
+            insertStm.setDate(5, vehicle.getData_kolejnego_przeglądu());
             int result = insertStm.executeUpdate();
 
             if (result != 1) {
@@ -97,10 +98,10 @@ public class vehicleDao {
         return null;
     }
 
-    public void delete(Integer vehicleId) {
+    public void delete(int vehicle_id) {
         try (Connection connection = DbUtil.getConn();
              PreparedStatement statement = connection.prepareStatement(DELETE_VEHILCE_QUERY);) {
-            statement.setInt(1, vehicleId);
+            statement.setInt(1, vehicle_id);
             statement.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();
@@ -116,7 +117,7 @@ public class vehicleDao {
             statement.setString(2, vehicle.getModel());
             statement.setInt(3, vehicle.getRok_produkcji());
             statement.setInt(4, vehicle.getNr_rejestracyjny());
-            statement.setDate(5, (Date) vehicle.getData_kolejnego_przeglądu());
+            statement.setDate(5, vehicle.getData_kolejnego_przeglądu());
 
             statement.executeUpdate();
         } catch (Exception e) {

@@ -12,7 +12,8 @@ public class employee {
 
     public employee() {};
 
-    public employee(String imie, String nazwisko, String adres, String telefon, String notatka, Double koszt_roboczogodziny) {
+    public employee(int employee_id, String imie, String nazwisko, String adres, String telefon, String notatka, Double koszt_roboczogodziny) {
+        this.employee_id = employee_id;
         this.imie = imie;
         this.nazwisko = nazwisko;
         this.adres = adres;

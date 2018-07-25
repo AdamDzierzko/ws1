@@ -17,7 +17,7 @@ public class employeeDao {
             "koszt_roboczogodziny) VALUES (?,?,?,?,?,?)";
     private static final String DELETE_EMPLOYEE_QUERY = "DELETE FROM employee where employee_id = ?";
     private static final String UPDATE_EMPLOYEE_QUERY = "UPDATE	employee SET imie = ? , nazwisko = ?, " +
-            "adres = ?, telefon = ?, notatka = ?, koszt_roboczogodziny = ?  WHERE	customer_id = ?";
+            "adres = ?, telefon = ?, notatka = ?, koszt_roboczogodziny = ?  WHERE	employee_id = ?";
 
     public employee read(Integer employeeId) {
         employee employee = new employee();
@@ -102,7 +102,7 @@ public class employeeDao {
         return null;
     }
 
-    public void delete(Integer employeeId) {
+    public void delete(int employeeId) {
         try (Connection connection = DbUtil.getConn();
              PreparedStatement statement = connection.prepareStatement(DELETE_EMPLOYEE_QUERY);) {
             statement.setInt(1, employeeId);

@@ -28,7 +28,7 @@ public class customerDao {
             try (ResultSet resultSet = statement.executeQuery()) {
                 while (resultSet.next()) {
                     customer.setCustomer_id(resultSet.getInt("customer_id"));
-                    customer.setImię(resultSet.getString("imie"));
+                    customer.setImie(resultSet.getString("imie"));
                     customer.setNazwisko(resultSet.getString("nazwisko"));
                     customer.setData_urodzenia(resultSet.getDate("data_urodzenia"));
                 }
@@ -40,7 +40,7 @@ public class customerDao {
         return customer;
     }
 
-    public static List<employee> findAll() {
+    public static List<customer> findAll() {
         List<customer> customerList = new ArrayList<>();
         try (Connection connection = DbUtil.getConn();
              PreparedStatement statement = connection.prepareStatement(FIND_ALL_CUSTOMER_QUERY);
@@ -49,7 +49,7 @@ public class customerDao {
             while (resultSet.next()) {
                 customer customerToAdd = new customer();
                 customerToAdd.setCustomer_id(resultSet.getInt("customer_id"));
-                customerToAdd.setImię(resultSet.getString("imie"));
+                customerToAdd.setImie(resultSet.getString("imie"));
                 customerToAdd.setNazwisko(resultSet.getString("nazwisko"));
                 customerToAdd.setData_urodzenia(resultSet.getDate("data_urodzenia"));
                 customerList.add(customerToAdd);
@@ -67,9 +67,9 @@ public class customerDao {
         try (Connection connection = DbUtil.getConn();
              PreparedStatement insertStm = connection.prepareStatement(CREATE_CUSTOMER_QUERY,
                      PreparedStatement.RETURN_GENERATED_KEYS)) {
-            insertStm.setString(1, customer.getImię());
+            insertStm.setString(1, customer.getImie());
             insertStm.setString(2, customer.getNazwisko());
-            insertStm.setDate(3, (Date) customer.getData_urodzenia());
+            insertStm.setDate(3, customer.getData_urodzenia());
             int result = insertStm.executeUpdate();
 
             if (result != 1) {
@@ -107,9 +107,9 @@ public class customerDao {
         try (Connection connection = DbUtil.getConn();
              PreparedStatement statement = connection.prepareStatement(UPDATE_CUSTOMER_QUERY);) {
             statement.setInt(4, customer.getCustomer_id());
-            statement.setString(1, customer.getImię());
+            statement.setString(1, customer.getImie());
             statement.setString(2, customer.getNazwisko());
-            statement.setDate(3, (Date) customer.getData_urodzenia());
+            statement.setDate(3,  customer.getData_urodzenia());
 
             statement.executeUpdate();
         } catch (Exception e) {

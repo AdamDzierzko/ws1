@@ -9,11 +9,12 @@ public class vehicle {
     private String model;
     private int rok_produkcji;
     private int nr_rejestracyjny;
-    private Date data_kolejnego_przeglądu;
+    private java.sql.Date data_kolejnego_przeglądu;
 
     public vehicle() {};
 
-    public vehicle(int customer_id, String model, int rok_produkcji, int nr_rejestracyjny, Date data_kolejnego_przeglądu) {
+    public vehicle(int vehicle_id, int customer_id, String model, int rok_produkcji, int nr_rejestracyjny, java.sql.Date data_kolejnego_przeglądu) {
+        this.vehicle_id = vehicle_id;
         this.customer_id = customer_id;
         this.model = model;
         this.rok_produkcji = rok_produkcji;
@@ -61,11 +62,11 @@ public class vehicle {
         this.nr_rejestracyjny = nr_rejestracyjny;
     }
 
-    public Date getData_kolejnego_przeglądu() {
+    public java.sql.Date getData_kolejnego_przeglądu() {
         return data_kolejnego_przeglądu;
     }
 
-    public void setData_kolejnego_przeglądu(Date data_kolejnego_przeglądu) {
+    public void setData_kolejnego_przeglądu(java.sql.Date data_kolejnego_przeglądu) {
         this.data_kolejnego_przeglądu = data_kolejnego_przeglądu;
     }
 }
