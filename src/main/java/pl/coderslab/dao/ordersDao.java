@@ -10,16 +10,16 @@ import java.util.List;
 
 public class ordersDao {
 
-    private static final String READ_ORDERS_QUERY = "Select * from orders where id = ?";
+    private static final String READ_ORDERS_QUERY = "Select * from orders where orders_id = ?";
     private static final String FIND_ALL_ORDERS_QUERY = "Select * from orders";
     private static final String CREATE_ORDERS_QUERY = "INSERT INTO orders(vehicle_id, employee_id, planowana_data_rozpoczecia_naprawy," +
             "data_rozpoczecia_naprawy, opis_problemu, opis_naprawy, status, koszt_naprawy_dla_klienta," +
             "koszt_wykorzystanych_części,koszt_roboczogodziny,ilość_roboczogodzin) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
-    private static final String DELETE_ORDERS_QUERY = "DELETE from orders where id = ?";
-    private static final String UPDATE_ORDERS_QUERY = "UPDATE	orders SET vehicle_id = ? , employee_id = ?, " +
-            "planowana_data_rozpoczecia_naprawy = ?, data_rozpoczecia_naprawy = ?, opis_problemu = ? " +
+    private static final String DELETE_ORDERS_QUERY = "DELETE from orders where orders_id = ?";
+    private static final String UPDATE_ORDERS_QUERY = "UPDATE orders SET vehicle_id = ? , employee_id = ?, " +
+            "planowana_data_rozpoczecia_naprawy = ?, data_rozpoczecia_naprawy = ?, opis_problemu = ?, " +
             " opis_naprawy = ?, status = ?, koszt_naprawy_dla_klienta = ?, koszt_wykorzystanych_części = ?," +
-            "koszt_roboczogodziny = ?, ilość_roboczogodzin = ?, WHERE	orders_id = ?";
+            "koszt_roboczogodziny = ?, ilość_roboczogodzin = ? WHERE orders_id = ?";
 
 
     public orders read(Integer ordersId) {
@@ -39,9 +39,9 @@ public class ordersDao {
                     orders.setOpis_problemu(resultSet.getString("opis_problemu"));
                     orders.setOpis_naprawy(resultSet.getString("opis_naprawy"));
                     orders.setKoszt_naprawy_dla_klienta(resultSet.getDouble("koszt_naprawy_dla_klienta"));
-                    orders.setKoszt_wykorzystanych_części(resultSet.getDouble("koszt_wykorzystanych_części"));
+                    orders.setKoszt_wykorzystanych_czesci(resultSet.getDouble("koszt_wykorzystanych_części"));
                     orders.setKoszt_roboczogodziny(resultSet.getDouble("koszt_roboczogodziny"));
-                    orders.setIlość_roboczogodzin(resultSet.getDouble("ilość_roboczogodzin"));
+                    orders.setIlosc_roboczogodzin(resultSet.getDouble("ilość_roboczogodzin"));
                 }
             }
         } catch (Exception e) {
@@ -64,12 +64,12 @@ public class ordersDao {
                 ordersToAdd.setEmployee_id(resultSet.getInt("employee_id"));
                 ordersToAdd.setPlanowana_data_rozpoczecia_naprawy(resultSet.getDate("planowana_data_rozpoczecia_naprawy"));
                 ordersToAdd.setData_rozpoczecia_naprawy(resultSet.getDate("data_rozpoczecia_naprawy"));
-                ordersToAdd.setOpis_problemu(resultSet.getString("opis_problemu"));
+               ordersToAdd.setOpis_problemu(resultSet.getString("opis_problemu"));
                 ordersToAdd.setOpis_naprawy(resultSet.getString("opis_naprawy"));
                 ordersToAdd.setKoszt_naprawy_dla_klienta(resultSet.getDouble("koszt_naprawy_dla_klienta"));
-                ordersToAdd.setKoszt_wykorzystanych_części(resultSet.getDouble("koszt_wykorzystanych_części"));
+                ordersToAdd.setKoszt_wykorzystanych_czesci(resultSet.getDouble("koszt_wykorzystanych_części"));
                 ordersToAdd.setKoszt_roboczogodziny(resultSet.getDouble("koszt_roboczogodziny"));
-                ordersToAdd.setIlość_roboczogodzin(resultSet.getDouble("ilość_roboczogodzin"));
+                ordersToAdd.setIlosc_roboczogodzin(resultSet.getDouble("ilość_roboczogodzin"));
                 ordersList.add(ordersToAdd);
             }
 
@@ -93,9 +93,9 @@ public class ordersDao {
             insertStm.setString(6, orders.getOpis_naprawy());
             insertStm.setString(7, orders.getStatus());
             insertStm.setDouble(8, orders.getKoszt_naprawy_dla_klienta());
-            insertStm.setDouble(9, orders.getKoszt_wykorzystanych_części());
+            insertStm.setDouble(9, orders.getKoszt_wykorzystanych_czesci());
             insertStm.setDouble(10, orders.getKoszt_roboczogodziny());
-            insertStm.setDouble(11, orders.getIlość_roboczogodzin());
+            insertStm.setDouble(11, orders.getIlosc_roboczogodzin());
             int result = insertStm.executeUpdate();
 
             if (result != 1) {
@@ -141,9 +141,9 @@ public class ordersDao {
             statement.setString(6, orders.getOpis_naprawy());
             statement.setString(7, orders.getStatus());
             statement.setDouble(8, orders.getKoszt_naprawy_dla_klienta());
-            statement.setDouble(9, orders.getKoszt_wykorzystanych_części());
+            statement.setDouble(9, orders.getKoszt_wykorzystanych_czesci());
             statement.setDouble(10, orders.getKoszt_roboczogodziny());
-            statement.setDouble(11, orders.getIlość_roboczogodzin());
+            statement.setDouble(11, orders.getIlosc_roboczogodzin());
             statement.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();

@@ -11,8 +11,8 @@ public class statusDao {
 
     private static final String READ_STATUS_QUERY = "Select * from status where orders_id = ?";
     private static final String FIND_ALL_STATUS_QUERY = "Select * from status ";
-    private static final String CREATE_STATUS_QUERY = "INSERT INTO status(orders_id,status) VALUES (?,?)";
-    private static final String DELETE_STATUS_QUERY = "DELETE FROM status where id = ?";
+    private static final String CREATE_STATUS_QUERY = "INSERT INTO status( orders_id,status) VALUES (?,?)";
+    private static final String DELETE_STATUS_QUERY = "DELETE FROM status where orders_id = ?";
     private static final String UPDATE_STATUS_QUERY = "UPDATE status SET status = ? WHERE	orders_id = ?";
 
     public status read(Integer vehicleId) {
@@ -98,5 +98,7 @@ public class statusDao {
         }
 
     }
+
+
 }
 

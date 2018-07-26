@@ -21,10 +21,7 @@ public class pojazdy extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         int vehicle_id = Integer.parseInt(request.getParameter("vehicle_id"));
- //       int customer_id = Integer.parseInt(request.getParameter("customer_id"));
         String model = request.getParameter("model");
- //       int rok_produkcji = Integer.parseInt(request.getParameter("rok_produkcji"));
-   //     int nr_rejestracyjny = Integer.parseInt(request.getParameter("nr_rejestracyjny"));
 
         int customer_id = 0;
         int rok_produkcji = 0 ;

@@ -9,11 +9,19 @@
 <html>
 <head>
     <title>WARSZTAT SAMOCHODOWY</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<p>WARSZTAT SAMOCHODOWY</p>
-<a href="http://localhost:8080/klienci">klienci</a>
-<a href="http://localhost:8080/pracownicy">pracownicy</a>
-<a href="http://localhost:8080/pojazdy">pojazdy</a>
+<div class="header">
+    <p class="nazwa">WARSZTAT SAMOCHODOWY</p>
+
+    <a href="http://localhost:8080/sg" class="a">strona główna</a>
+    <a href="http://localhost:8080/klienci" class="a">klienci</a>
+    <a href="http://localhost:8080/pracownicy" class="a">pracownicy</a>
+    <a href="http://localhost:8080/pojazdy" class="a">pojazdy</a>
+    <a href="http://localhost:8080/zlecenia" class="a">zlecenia</a>
+    <a href="http://localhost:8080/status" class="a">status</a>
+</div>
+<hr>
 </body>
 </html>

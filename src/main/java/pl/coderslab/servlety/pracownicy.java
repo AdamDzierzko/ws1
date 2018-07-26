@@ -24,10 +24,9 @@ public class pracownicy extends HttpServlet {
         String adres = request.getParameter("adres");
         String telefon = request.getParameter("telefon");
         String notatka = request.getParameter("notatka");
+
         Double koszt_roboczogodziny = null;
-
         String a = request.getParameter("koszt_roboczogodziny");
-
         if (a != null && a.length() > 0) {
             try {
                 koszt_roboczogodziny = Double.parseDouble(a);
