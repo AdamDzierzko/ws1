@@ -18,6 +18,15 @@ public class vehicleDao {
     private static final String DELETE_VEHILCE_QUERY = "DELETE FROM vehicle where vehicle_id = ?";
     private static final String UPDATE_VEHILCE_QUERY = "UPDATE	vehicle SET customer_id = ? , model = ?, " +
             "rok_produkcji = ?, nr_rejestracyjny = ?, data_kolejnego_przeglądu = ?  WHERE	vehicle_id = ?";
+    private static final String FIND_A = "    SELECT vehicle.vehicle_id\n" +
+            "FROM vehicle\n" +
+            "WHERE vehicle.customer_id=?;";
+    private static final String FIND_AL = "SELECT orders.orders_id, orders.employee_id\n" +
+            ", orders.planowana_data_rozpoczecia_naprawy, orders.data_rozpoczecia_naprawy, orders.opis_problemu, orders.opis_naprawy \n" +
+            ", orders.status, orders.koszt_naprawy_dla_klienta, orders.koszt_wykorzystanych_części, orders.koszt_roboczogodziny \n" +
+            ", orders.ilość_roboczogodzin       \n" +
+            "FROM orders\n" +
+            "WHERE orders.vehicle_id=?;";
 
     public vehicle read(Integer vehicleId) {
         vehicle vehicle = new vehicle();
@@ -124,6 +133,27 @@ public class vehicleDao {
             e.printStackTrace();
             System.out.println("Cos sie nie powiodło");
         }
+
+    }
+
+    public List<vehicle> findA(int customer_id) {
+        List<vehicle> vehicleList = new ArrayList<>();
+        try (Connection connection = DbUtil.getConn();
+             PreparedStatement statement = connection.prepareStatement(FIND_A);)
+        {
+            statement.setInt(1, customer_id);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    vehicle vehicleToAdd = new vehicle();
+                    vehicleToAdd.setVehicle_id(resultSet.getInt("vehicle_id"));
+                    vehicleList.add(vehicleToAdd);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("Cos sie nie powiodło");
+        }
+        return vehicleList;
 
     }
 }

@@ -4,7 +4,9 @@ import pl.coderslab.DbUtil;
 import pl.coderslab.customer;
 import pl.coderslab.dao.customerDao;
 import pl.coderslab.dao.employeeDao;
+import pl.coderslab.dao.ordersDao;
 import pl.coderslab.employee;
+import pl.coderslab.orders;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -40,6 +42,10 @@ public class pracownicy extends HttpServlet {
         employeeDao employeeDaos = new employeeDao();
         employee employee = null;
 
+        ordersDao ordersDao = new ordersDao();
+        orders orders = null;
+        int b = 0;
+
         if ("dodaj".equals(op)) {
             employee = new employee(employee_id, imie, nazwisko, adres, telefon, notatka, koszt_roboczogodziny);
             employeeDaos.create(employee);
@@ -51,6 +57,34 @@ public class pracownicy extends HttpServlet {
         if ("usun".equals(op)) {
             employeeDaos.delete(employee_id);
         }
+        if ("zp".equals(op)) {
+
+            try {
+                Connection c = DbUtil.getConn();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            employeeDao employeeDao = new employeeDao();
+            List<employee> employees = employeeDao.findAll();
+
+            request.setAttribute("employees", employees);
+
+            b = 1;
+            request.setAttribute("b", b);
+
+            int d = employee_id;
+            request.setAttribute("d", d);
+
+            ordersDao ordersDaos = new ordersDao();
+            List<orders> o =  ordersDaos.findA(employee_id);
+            request.setAttribute("o", o);
+
+            getServletContext().getRequestDispatcher("/pracownicy.jsp")
+                   .forward(request, response);
+        }
+
+
         response.sendRedirect("http://localhost:8080/pracownicy");
     }
 

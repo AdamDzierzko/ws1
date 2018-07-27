@@ -17,6 +17,7 @@
 <p class="b">
 <c:out value="<b> PRACOWNICY </b>" escapeXml="false"/>
 </p>
+
 <p>
 <table >
     <th class="table2">employee_id</th>
@@ -34,6 +35,23 @@
 </table>
 </p>
 
+<c:if test="${b==1}">
+    <p class="b">
+    <c:out value="<b> ZLECENIA PRACOWNIKA ${d} </b>" escapeXml="false"/>
+    </p>
+
+    <table >
+        <th class="table2">orders_id</th>
+        <th class="table2">vehicle_id</th>
+        <c:forEach items="${o}" var="c">
+            <tr>
+                <td class="table">${c.orders_id} </td> <td class="table">${c.vehicle_id} </td>
+            </tr>
+        </c:forEach>
+
+    </table>
+</c:if>
+
 <pre>
 <form action="pracownicy" method="post" class="form">
     employee_id:            <input placeHolder="employee_id" type="number" name="employee_id" class="form2"></br>
@@ -43,7 +61,7 @@
     telefon:                <input placeHolder="telefon" type="text" name="telefon" class="form2"></br>
     notatka:                <input placeHolder="notatka" type="text" name="notatka" class="form2"></br>
     koszt_roboczogodziny:   <input placeHolder="koszt_roboczogodziny" type="text" name="koszt_roboczogodziny" class="form2"></br>
-    Dodaj: <input type="radio" name="op" value="dodaj"> Modyfikuj: <input type="radio" name="op" value="modyfikuj"> Usuń: <input type="radio" name="op" value="usun"></br>
+    Dodaj: <input type="radio" name="op" value="dodaj"> Modyfikuj: <input type="radio" name="op" value="modyfikuj"> Usuń: <input type="radio" name="op" value="usun">   Zlecenia pracownika: <input type="radio" name="op" value="zp"></br>
     <input type="submit" value="Wyślij" class="sub">
     <br>
 </form>

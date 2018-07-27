@@ -1,7 +1,11 @@
 package pl.coderslab.servlety;
 
 import pl.coderslab.DbUtil;
+import pl.coderslab.dao.employeeDao;
+import pl.coderslab.dao.ordersDao;
 import pl.coderslab.dao.vehicleDao;
+import pl.coderslab.employee;
+import pl.coderslab.orders;
 import pl.coderslab.vehicle;
 
 import javax.servlet.ServletException;
@@ -73,6 +77,8 @@ public class pojazdy extends HttpServlet {
         vehicleDao vehicleDaos = new vehicleDao();
         vehicle vehicle = null;
 
+        int g = 0;
+
         if ("dodaj".equals(op)) {
             vehicle = new vehicle(vehicle_id, customer_id, model, rok_produkcji, nr_rejestracyjny, data_kolejnego_przegladu);
             vehicleDaos.create(vehicle);
@@ -83,6 +89,32 @@ public class pojazdy extends HttpServlet {
         }
         if ("usun".equals(op)) {
             vehicleDaos.delete(vehicle_id);
+        }
+        if ("ln".equals(op)) {
+
+            try {
+                Connection f = DbUtil.getConn();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            vehicleDao vehicleDao = new vehicleDao();
+            List<vehicle> vehicles = vehicleDao.findAll();
+
+            request.setAttribute("vehicles", vehicles);
+
+            g = 1;
+            request.setAttribute("g", g);
+
+            int d = vehicle_id;
+            request.setAttribute("d", d);
+
+            ordersDao ordersDaos = new ordersDao();
+            List<orders> o =  ordersDaos.find(vehicle_id);
+            request.setAttribute("o", o);
+
+            getServletContext().getRequestDispatcher("/pojazdy.jsp")
+                    .forward(request, response);
         }
         response.sendRedirect("http://localhost:8080/pojazdy");
 

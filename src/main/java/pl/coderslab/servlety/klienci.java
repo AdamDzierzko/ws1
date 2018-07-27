@@ -1,8 +1,10 @@
 package pl.coderslab.servlety;
 
-import pl.coderslab.DbUtil;
-import pl.coderslab.customer;
+import pl.coderslab.*;
 import pl.coderslab.dao.customerDao;
+import pl.coderslab.dao.employeeDao;
+import pl.coderslab.dao.ordersDao;
+import pl.coderslab.dao.vehicleDao;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -33,6 +35,8 @@ public class klienci extends HttpServlet {
             e.printStackTrace();
         }
 
+        int b = 0;
+
         String op = request.getParameter("op");
 
         customerDao customerDaos = new customerDao();
@@ -48,6 +52,58 @@ public class klienci extends HttpServlet {
         }
         if ("usun".equals(op)) {
             customerDaos.delete(customer_id);
+        }
+        if ("pk".equals(op)) {
+
+            try {
+                Connection c = DbUtil.getConn();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            customerDao customerDao = new customerDao();
+            List<customer> customers = customerDao.findAll();
+
+            request.setAttribute("customer", customers);
+
+            b = 1;
+            request.setAttribute("b", b);
+
+            int d = customer_id;
+            request.setAttribute("d", d);
+
+            vehicleDao vehicleDaos = new vehicleDao();
+            List<vehicle> o =  vehicleDaos.findA(customer_id);
+            request.setAttribute("o", o);
+
+            getServletContext().getRequestDispatcher("/klienci.jsp")
+                    .forward(request, response);
+        }
+        if ("zk".equals(op)) {
+
+            try {
+                Connection c = DbUtil.getConn();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            customerDao customerDao = new customerDao();
+            List<customer> customers = customerDao.findAll();
+
+            request.setAttribute("customer", customers);
+
+            b = 2;
+            request.setAttribute("b", b);
+
+            int d = customer_id;
+            request.setAttribute("d", d);
+
+            ordersDao ordersDaos = new ordersDao();
+            List<orders> p =  ordersDaos.findW(customer_id);
+            request.setAttribute("p", p);
+
+            getServletContext().getRequestDispatcher("/klienci.jsp")
+                    .forward(request, response);
         }
         response.sendRedirect("http://localhost:8080/klienci");
     }

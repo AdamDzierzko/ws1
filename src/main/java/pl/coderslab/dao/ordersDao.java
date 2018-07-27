@@ -1,7 +1,6 @@
 package pl.coderslab.dao;
 
-import pl.coderslab.*;
-import pl.coderslab.orders;
+import pl.coderslab.DbUtil;
 import pl.coderslab.orders;
 
 import java.sql.*;
@@ -20,7 +19,20 @@ public class ordersDao {
             "planowana_data_rozpoczecia_naprawy = ?, data_rozpoczecia_naprawy = ?, opis_problemu = ?, " +
             " opis_naprawy = ?, status = ?, koszt_naprawy_dla_klienta = ?, koszt_wykorzystanych_części = ?," +
             "koszt_roboczogodziny = ?, ilość_roboczogodzin = ? WHERE orders_id = ?";
-
+    private static final String FIND_EMP = "SELECT orders.orders_id, orders.vehicle_id \n" +
+            "FROM orders\n" +
+            "WHERE orders.employee_id=?";
+    private static final String FIND_AL = "SELECT orders.orders_id, orders.employee_id\n" +
+            ", orders.planowana_data_rozpoczecia_naprawy, orders.data_rozpoczecia_naprawy, orders.opis_problemu, orders.opis_naprawy \n" +
+            ", orders.status, orders.koszt_naprawy_dla_klienta, orders.koszt_wykorzystanych_części, orders.koszt_roboczogodziny \n" +
+            ", orders.ilość_roboczogodzin       \n" +
+            "FROM orders\n" +
+            "WHERE orders.vehicle_id=?;";
+    private static final String FIND_L = "SELECT orders.orders_id, orders.vehicle_id \n" +
+            "from customer\n" +
+            "JOIN vehicle ON customer.customer_id = vehicle.customer_id\n" +
+            "JOIN orders ON vehicle.vehicle_id = orders.vehicle_id\n" +
+            "WHERE customer.customer_id = ?;";
 
     public orders read(Integer ordersId) {
         orders orders = new orders();
@@ -64,7 +76,7 @@ public class ordersDao {
                 ordersToAdd.setEmployee_id(resultSet.getInt("employee_id"));
                 ordersToAdd.setPlanowana_data_rozpoczecia_naprawy(resultSet.getDate("planowana_data_rozpoczecia_naprawy"));
                 ordersToAdd.setData_rozpoczecia_naprawy(resultSet.getDate("data_rozpoczecia_naprawy"));
-               ordersToAdd.setOpis_problemu(resultSet.getString("opis_problemu"));
+                ordersToAdd.setOpis_problemu(resultSet.getString("opis_problemu"));
                 ordersToAdd.setOpis_naprawy(resultSet.getString("opis_naprawy"));
                 ordersToAdd.setKoszt_naprawy_dla_klienta(resultSet.getDouble("koszt_naprawy_dla_klienta"));
                 ordersToAdd.setKoszt_wykorzystanych_czesci(resultSet.getDouble("koszt_wykorzystanych_części"));
@@ -151,4 +163,77 @@ public class ordersDao {
         }
 
     }
+
+    public List<orders> findA(int employee_id) {
+        List<orders> ordersList = new ArrayList<>();
+        try (Connection connection = DbUtil.getConn();
+             PreparedStatement statement = connection.prepareStatement(FIND_EMP);) {
+            statement.setInt(1, employee_id);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    orders ordersToAdd = new orders();
+                    ordersToAdd.setOrders_id(resultSet.getInt("orders_id"));
+                    ordersToAdd.setVehicle_id(resultSet.getInt("vehicle_id"));
+                    ordersList.add(ordersToAdd);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("Cos sie nie powiodło");
+        }
+        return ordersList;
+
+    }
+
+    public List<orders> find(int vehicle_id) {
+        List<orders> ordersList = new ArrayList<>();
+        try (Connection connection = DbUtil.getConn();
+             PreparedStatement statement = connection.prepareStatement(FIND_AL);) {
+            statement.setInt(1, vehicle_id);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    orders ordersToAdd = new orders();
+                    ordersToAdd.setOrders_id(resultSet.getInt("orders_id"));
+                    ordersToAdd.setEmployee_id(resultSet.getInt("employee_id"));
+                    ordersToAdd.setPlanowana_data_rozpoczecia_naprawy(resultSet.getDate("planowana_data_rozpoczecia_naprawy"));
+                    ordersToAdd.setData_rozpoczecia_naprawy(resultSet.getDate("data_rozpoczecia_naprawy"));
+                    ordersToAdd.setOpis_problemu(resultSet.getString("opis_problemu"));
+                    ordersToAdd.setOpis_naprawy(resultSet.getString("opis_naprawy"));
+                    ordersToAdd.setKoszt_naprawy_dla_klienta(resultSet.getDouble("koszt_naprawy_dla_klienta"));
+                    ordersToAdd.setKoszt_wykorzystanych_czesci(resultSet.getDouble("koszt_wykorzystanych_części"));
+                    ordersToAdd.setKoszt_roboczogodziny(resultSet.getDouble("koszt_roboczogodziny"));
+                    ordersToAdd.setIlosc_roboczogodzin(resultSet.getDouble("ilość_roboczogodzin"));
+                    ordersList.add(ordersToAdd);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("Cos sie nie powiodło");
+        }
+        return ordersList;
+
+    }
+
+    public List<orders> findW(int customer_id) {
+        List<orders> ordersList = new ArrayList<>();
+        try (Connection connection = DbUtil.getConn();
+             PreparedStatement statement = connection.prepareStatement(FIND_L);) {
+            statement.setInt(1, customer_id);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    orders ordersToAdd = new orders();
+                    ordersToAdd.setOrders_id(resultSet.getInt("orders_id"));
+                    ordersToAdd.setVehicle_id(resultSet.getInt("vehicle_id"));
+                    ordersList.add(ordersToAdd);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("Cos sie nie powiodło");
+        }
+        return ordersList;
+
+    }
+
+
 }

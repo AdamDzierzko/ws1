@@ -24,7 +24,7 @@
     <th class="table2">status</th>
     <c:forEach items="${status}" var="a">
         <tr>
-            <td>${a.orders_id} </td> <td class="table">${a.status} </td>
+            <td class="table">${a.orders_id} </td> <td class="table">${a.status} </td>
         </tr>
     </c:forEach>
 </table>
