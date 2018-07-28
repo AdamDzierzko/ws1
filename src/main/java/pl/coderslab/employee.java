@@ -9,6 +9,7 @@ public class employee {
     private String telefon;
     private String notatka;
     private Double koszt_roboczogodziny;
+    private Double sum;
 
     public employee() {};
 
@@ -76,5 +77,13 @@ public class employee {
 
     public void setKoszt_roboczogodziny(Double koszt_roboczogodziny) {
         this.koszt_roboczogodziny = koszt_roboczogodziny;
+    }
+
+    public Double getSum() {
+        return sum;
+    }
+
+    public void setSum(Double sum) {
+        this.sum = sum;
     }
 }

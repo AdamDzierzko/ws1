@@ -21,6 +21,7 @@
     <a href="http://localhost:8080/pojazdy" class="a">pojazdy</a>
     <a href="http://localhost:8080/zlecenia" class="a">zlecenia</a>
     <a href="http://localhost:8080/status" class="a">status</a>
+    <a href="http://localhost:8080/raporty" class="a">raport</a>
 </div>
 <hr>
 </body>
